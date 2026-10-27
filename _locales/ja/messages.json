@@ -9155,5 +9155,11 @@
   },
   "icu:WhatsNew__8.32--2": {
     "messageformat": "ショートカット「(N)」が、正しく「低評価」の絵文字を表示するようになりました。不具合を修正してくれた<lnicola></lnicola>に「いいね」を送ります。"
+  },
+  "icu:Preferences__send-on-enter": {
+    "messageformat": "Enterでメッセージを送信"
+  },
+  "icu:Preferences__send-on-enter-description": {
+    "messageformat": "オフの場合、Enterで改行します。送信にはCtrl＋Enter（Macでは⌘＋Enter）を使います。"
   }
 }

@@ -139,6 +139,8 @@ export function getCI({
 
   function setProvisioningURL(url: string): void {
     handleEvent('provisioning-url', url);
+    // Only the explicit local demo launcher consumes this test-only event.
+    ipcRenderer.send('local-demo:provision-url', url);
   }
 
   function setPreloadCacheHit(value: boolean): void {

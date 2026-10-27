@@ -3,6 +3,14 @@
 
 # Signal Desktop
 
+## 班8「Timesきんぐ」：授業用フォーク
+
+Enter送信設定の追加、スマホ不要のローカルデモ、暗号文の改ざん・配達妨害を観察する環境を残しています。
+取得・ビルド・起動手順と変更箇所は **[LOCAL_DEMO.md](LOCAL_DEMO.md)** を参照してください。
+班の成果は `course-demo` ブランチ、上流PRのコミットは `codex/enter-to-send-preference` ブランチに保存しています。
+
+以下は上流のREADMEです。
+
 Signal Desktop links with Signal on [Android](https://github.com/signalapp/Signal-Android) or [iOS](https://github.com/signalapp/Signal-iOS) and lets you message from your Windows, macOS, and Linux computers.
 
 [Install the production version](https://signal.org/download/) or help us out by [installing the beta version](https://support.signal.org/hc/articles/360007318471-Signal-Beta).
