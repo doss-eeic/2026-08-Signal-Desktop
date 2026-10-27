@@ -38,13 +38,18 @@ export async function startAttackLab({
   alice,
   logsDir,
   senderDesktop,
+  port = 8790,
 }: {
   server: Server;
   desktop: Device;
   alice: PrimaryDevice;
   logsDir: string;
   senderDesktop?: Device;
+  port?: number;
 }): Promise<() => Promise<void>> {
+  if (!Number.isInteger(port) || port < 0 || port > 65535) {
+    throw new Error('観察パネルのポートは0から65535の整数にしてください');
+  }
   const token = randomBytes(24).toString('hex');
   const started = Date.now();
   const events: Array<{ time: string; text: string }> = [];
@@ -300,12 +305,16 @@ export async function startAttackLab({
   http.requestTimeout = 10000;
   await new Promise<void>((resolve, reject) => {
     http.once('error', reject);
-    http.listen(8790, '127.0.0.1', () => resolve());
+    http.listen(port, '127.0.0.1', () => resolve());
   });
   record(
     '準備完了。SignalアプリでAliceの会話を開き、通常配達から比較してください。'
   );
-  console.log('攻撃の観察パネル：http://127.0.0.1:8790');
+  const address = http.address();
+  if (!address || typeof address === 'string') {
+    throw new Error('観察パネルのポートを確認できません');
+  }
+  console.log(`攻撃の観察パネル：http://127.0.0.1:${address.port}`);
   return async () => {
     // oxlint-disable-next-line eslint/no-param-reassign -- restore local server hook
     server.send = originalSend;

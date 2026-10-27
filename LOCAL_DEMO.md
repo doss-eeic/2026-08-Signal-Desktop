@@ -48,7 +48,11 @@ macOSでは送信側を別アプリとして扱うため、公式Electronを一�
 
 ## 改ざん・保留・再送
 
-デモの起動後に <http://127.0.0.1:8790/> を開きます。このポートがほかのプロセスで使われている場合は、先にそちらを終了してください。
+デモの起動後に <http://127.0.0.1:8790/> を開きます。ポートが使用中の場合は、次のように別の番号を指定できます。表示されたURLを開いてください。
+
+```bash
+SIGNAL_DEMO_PORT=8791 ./start-local-demo.command
+```
 
 1. 送信側Aliceで「受信側」の会話、受信側でAliceの会話を開きます。
 2. 操作画面で「次の送信側→受信側の配達を改ざんする」か「保留する」を選び、送信側で入力・送信します。
@@ -70,10 +74,22 @@ macOSでは送信側を別アプリとして扱うため、公式Electronを一�
 ```bash
 pnpm run check:types
 node --import=tsx --test scripts/local-attack-lab_test.node.ts
-pnpm exec mocha --require ts/test-mock/setup-ci.node.ts ts/test-mock/settings/settings_test.node.ts
+SIGNAL_MOCK_TESTS_BACKGROUND=1 pnpm exec mocha --require ts/test-mock/setup-ci.node.ts ts/test-mock/settings/settings_test.node.ts
 ```
 
 最後のコマンドはElectronのモック統合テストです。GUIを起動できる環境が必要です。Enter設定の既定値、切替、再読み込み後の保持、改行付き送信を確認します。macOS以外での手動確認はまだ行っていません。
+
+## このフォークでの確認結果
+
+2026-10-27、macOS 26.0.1（Apple Silicon）、Node 24.22.0・pnpm 11.24.0 で確認しました。
+
+- `pnpm install --frozen-lockfile` と `pnpm run generate`：成功。
+- `pnpm run check:types`：成功。
+- 改ざん・原本保持・パネルのJavaScriptのテスト：3件成功。
+- バックグラウンド起動の設定統合テスト：2件成功。
+- `SIGNAL_DEMO_PORT=0` で送受信2画面の自動セットアップ、実際に割り当てられた観察APIのHTTP 200、Ctrl+C相当の終了コード0を確認。
+
+ポート0はOSによる空きポートの割り当てです。通常は既定の8790か、上記のように固定の空き番号を指定して使えます。
 
 ## 関係するファイル
 

@@ -296,16 +296,17 @@ async function main(): Promise<void> {
       });
       if (index !== 0) void replyLoop(contact, desktop, isStopping);
     }
-    console.log(
-      '準備完了：Alice / Bob と会話できます。終了するとデモデータは消えます。'
-    );
     closeAttackLab = await startAttackLab({
       server,
       desktop,
       alice,
       logsDir: bootstrap.logsDir,
       senderDesktop,
+      port: Number(process.env.SIGNAL_DEMO_PORT ?? 8790),
     });
+    console.log(
+      '準備完了：Alice / Bob と会話できます。終了するとデモデータは消えます。'
+    );
   } catch (error) {
     console.error('ローカルデモの起動に失敗:', error);
     await stop(1);
